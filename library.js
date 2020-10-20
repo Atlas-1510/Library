@@ -1,5 +1,5 @@
 const myLibrary = [];
-const libraryDiv = document.getElementById("library");
+const libraryMain = document.getElementById("library");
 const testBooks = [
     ["The Hobbit", "Tolkien", 295, false],
     ["Harry potter", "J.R Rowling", 432, true],
@@ -49,8 +49,25 @@ function addBookToLibrary(book) {
 
 // Display library on screen
 myLibrary.forEach((book) => {
-    let newBookDiv = document.createElement("div");
-    newBookDiv.textContent = book.getInfo();
-    libraryDiv.appendChild(newBookDiv);
+    // For each book, make a tile in the library and show the books information within that tile
+    let newBookTile = document.createElement("article");
+    newBookTile.classList.add("tile");
+    // Book title
+    let tileHeader = document.createElement("h1");
+    tileHeader.textContent = book.title;
+    newBookTile.appendChild(tileHeader);
+    // Book information
+    let tileList = document.createElement("ul");
+    let tileAuthor = document.createElement("li");
+    tileAuthor.textContent = book.author;
+    let tilePages = document.createElement("li");
+    tilePages.textContent = `${book.pages} pages`
+    let tileRead = document.createElement("li");
+    tileRead.textContent = (book.read) ? "Read" : "Not read";
+    tileList.appendChild(tileAuthor);
+    tileList.appendChild(tilePages);
+    tileList.appendChild(tileRead);
+    newBookTile.appendChild(tileList);
+    libraryMain.appendChild(newBookTile);
 });
 

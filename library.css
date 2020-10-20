@@ -1,0 +1,26 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100%;
+}
+
+#library {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 1rem;
+    min-height: 100%;
+}
+
+.tile {
+    border: 1px solid black;
+    border-radius: 25px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+article > h1 {
+    padding-left: 1rem;
+}
