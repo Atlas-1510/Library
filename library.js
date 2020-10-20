@@ -1,13 +1,21 @@
 const myLibrary = [];
 const libraryMain = document.getElementById("library");
-const testBooks = [
-    ["The Hobbit", "Tolkien", 295, false],
-    ["Harry potter", "J.R Rowling", 432, true],
-    ["Dune", "Frank Herbert", 689, true],
-]
 
-for (let i = 0; i < testBooks.length; i++) {
-    addBookFromArray(testBooks[i]);
+// Dummy books to start with
+let debug = true;
+if (debug) {
+    debugFn();
+}
+function debugFn() {
+    const testBooks = [
+        ["The Hobbit", "Tolkien", 295, false],
+        ["Harry Potter", "J.R Rowling", 432, true],
+        ["Dune", "Frank Herbert", 689, true],
+        ["The Witcher", "Andrzej Sapkowski", 288, true],
+    ]
+    for (let i = 0; i < testBooks.length; i++) {
+        addBookFromArray(testBooks[i]);
+    }
 }
 
 // Function to take book information array, make it into a book, and add to the library array
@@ -17,11 +25,8 @@ function addBookFromArray(array) {
     let newPages = array[2];
     let newRead = array[3];
     let book = newBook(newTitle, newAuthor, newPages, newRead);
-    addBookToLibrary(book);
+    myLibrary.push(book);
 }
-
-console.log("active");
-
 
 // Book Constructor
 function Book(title, author, pages, read) {
@@ -40,11 +45,6 @@ Book.prototype.getInfo = function () {
 function newBook(title, author, pages, read) {
     let book = new Book(title, author, pages, read);
     return book;
-}
-
-// Add book to library
-function addBookToLibrary(book) {
-    myLibrary.push(book);
 }
 
 // Display library on screen
@@ -71,3 +71,9 @@ myLibrary.forEach((book) => {
     libraryMain.appendChild(newBookTile);
 });
 
+// "Add Book" button
+const addBookButton = document.getElementById("addBookButton");
+addBookButton.addEventListener("onclick", () => {
+    // Figure out how to make form pop up here
+    // Use this video https://www.youtube.com/watch?v=MBaw_6cPmAw
+}
