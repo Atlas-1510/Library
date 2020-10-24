@@ -76,4 +76,4 @@ const addBookButton = document.getElementById("addBookButton");
 addBookButton.addEventListener("onclick", () => {
     // Figure out how to make form pop up here
     // Use this video https://www.youtube.com/watch?v=MBaw_6cPmAw
-}
+})
