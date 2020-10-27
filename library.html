@@ -10,7 +10,22 @@
 
 <body>
     <header>
-        <button id="addBookButton">Add Book</button>
+        <button data-modal-target="#addBookModal" id="addBookButton">Add Book</button>
+        <div class="modal" id="addBookModal">
+            <div class="modalHeader">
+                <div class="modalTitle">Example Modal</div>
+                <button data-modal-close class="modalClose">&times;</button>
+            </div>
+            <div class="modalBody">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, aut sint atque nisi debitis placeat.
+                Consequuntur a facilis tempora unde illo, quas consectetur soluta inventore molestias. Cupiditate
+                accusamus dicta non! Ipsum sapiente voluptas ratione nemo distinctio unde vel quibusdam, suscipit quo
+                quas dolor mollitia quasi quod, numquam similique harum eius corporis ipsam facilis. Necessitatibus
+                nobis, ab blanditiis sapiente possimus voluptates nihil culpa nostrum vero deleniti harum explicabo.
+                Quasi provident non autem molestiae ipsa tempora aperiam, cum, ullam voluptates aliquid assumenda!
+            </div>
+        </div>
+        <div id="modalOverlay"></div>
     </header>
     <br>
     <main id="library"></main>

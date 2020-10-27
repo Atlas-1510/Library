@@ -71,9 +71,43 @@ myLibrary.forEach((book) => {
     libraryMain.appendChild(newBookTile);
 });
 
-// "Add Book" button
-const addBookButton = document.getElementById("addBookButton");
-addBookButton.addEventListener("onclick", () => {
-    // Figure out how to make form pop up here
-    // Use this video https://www.youtube.com/watch?v=MBaw_6cPmAw
-})
+
+
+
+// Modals
+const overlay = document.getElementById('modalOverlay');
+const modalOverlay = document.getElementById("modalOverlay");
+const openModalButtons = document.querySelectorAll("[data-modal-target]");
+openModalButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        let modal = document.querySelector(button.dataset.modalTarget);
+        openModal(modal);
+    })
+});
+const closeModalButtons = document.querySelectorAll("[data-modal-close]");
+closeModalButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        let modal = button.closest(".modal");
+        closeModal(modal)
+    })
+});
+
+overlay.addEventListener("click", () => {
+    closeModalButtons.forEach(button => {
+        let modal = button.closest(".modal");
+        closeModal(modal);
+    })
+});
+
+function openModal(modal) {
+    if (modal == null) console.log("No modal provided");
+    modal.classList.add("active");
+    overlay.classList.add("active");
+};
+
+function closeModal(modal) {
+    if (modal == null) console.log("No modal provided");
+    modal.classList.remove("active");
+    overlay.classList.remove("active");
+};
+
