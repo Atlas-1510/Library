@@ -13,16 +13,24 @@
         <button data-modal-target="#addBookModal" id="addBookButton">Add Book</button>
         <div class="modal" id="addBookModal">
             <div class="modalHeader">
-                <div class="modalTitle">Example Modal</div>
+                <div class="modalTitle">Add book to library</div>
                 <button data-modal-close class="modalClose">&times;</button>
             </div>
             <div class="modalBody">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, aut sint atque nisi debitis placeat.
-                Consequuntur a facilis tempora unde illo, quas consectetur soluta inventore molestias. Cupiditate
-                accusamus dicta non! Ipsum sapiente voluptas ratione nemo distinctio unde vel quibusdam, suscipit quo
-                quas dolor mollitia quasi quod, numquam similique harum eius corporis ipsam facilis. Necessitatibus
-                nobis, ab blanditiis sapiente possimus voluptates nihil culpa nostrum vero deleniti harum explicabo.
-                Quasi provident non autem molestiae ipsa tempora aperiam, cum, ullam voluptates aliquid assumenda!
+                <label for="bookTitle">Title:</label>
+                <input type="text" id="bookTitle" name="bookTitle">
+                <label for="bookAuthor">Author:</label>
+                <input type="text" id="bookAuthor" name="bookAuthor">
+                <label for="bookPages">Pages:</label>
+                <input type="text" id="bookPages" name="bookPages">
+                <label for="bookRead">Have you read this book?</label>
+                <div>
+                    <input type="radio" id="bookRead" name="read" value="Read">
+                    <label for="bookRead">Read</label>
+                    <input type="radio" id="bookNotRead" name="read" value="Not read">
+                    <label for="bookNotRead">Not Read</label>
+                </div>
+                <input type="submit" value="Add Book" id="addBookSubmit">
             </div>
         </div>
         <div id="modalOverlay"></div>

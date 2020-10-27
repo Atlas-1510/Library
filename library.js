@@ -49,6 +49,10 @@ function newBook(title, author, pages, read) {
 
 // Display library on screen
 myLibrary.forEach((book) => {
+    addBookToLibrary(book);
+});
+
+function addBookToLibrary(book) {
     // For each book, make a tile in the library and show the books information within that tile
     let newBookTile = document.createElement("article");
     newBookTile.classList.add("tile");
@@ -69,7 +73,7 @@ myLibrary.forEach((book) => {
     tileList.appendChild(tileRead);
     newBookTile.appendChild(tileList);
     libraryMain.appendChild(newBookTile);
-});
+}
 
 
 
@@ -111,3 +115,17 @@ function closeModal(modal) {
     overlay.classList.remove("active");
 };
 
+// Add book modal form functionality
+const addBookSubmitButton = document.getElementById("addBookSubmit");
+addBookSubmitButton.addEventListener("click", (button) => {
+    let bookTitle = document.getElementById("bookTitle").value;
+    console.log(bookTitle);
+    let bookAuthor = document.getElementById("bookAuthor").value;
+    console.log(bookAuthor);
+    let bookPages = document.getElementById("bookPages").value;
+    console.log(bookPages);
+    let bookRead = document.querySelector('input[name="read"]:checked').value;
+    console.log(bookRead);
+    let addBook = newBook(bookTitle, bookAuthor, bookPages, bookRead);
+    addBookToLibrary(addBook);
+})
