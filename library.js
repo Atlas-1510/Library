@@ -117,14 +117,14 @@ function closeModal(modal) {
 
 // Add book modal form functionality
 const addBookSubmitButton = document.getElementById("addBookSubmit");
-addBookSubmitButton.addEventListener("click", (button) => {
+addBookSubmitButton.addEventListener("click", () => {
     let bookTitle = document.getElementById("bookTitle").value;
     console.log(bookTitle);
     let bookAuthor = document.getElementById("bookAuthor").value;
     console.log(bookAuthor);
     let bookPages = document.getElementById("bookPages").value;
     console.log(bookPages);
-    let bookRead = document.querySelector('input[name="read"]:checked').value;
+    let bookRead = (document.querySelector('input[name="read"]:checked').value == "Read") ? true : false;
     console.log(bookRead);
     let addBook = newBook(bookTitle, bookAuthor, bookPages, bookRead);
     addBookToLibrary(addBook);
