@@ -56,10 +56,17 @@ function addBookToLibrary(book) {
     // For each book, make a tile in the library and show the books information within that tile
     let newBookTile = document.createElement("article");
     newBookTile.classList.add("tile");
-    // Book title
-    let tileHeader = document.createElement("h1");
-    tileHeader.textContent = book.title;
-    newBookTile.appendChild(tileHeader);
+    // Book title and delete book button
+    let tileHeader = document.createElement("div");
+    tileHeader.classList.add("tileHeader");
+    let tileTitle = document.createElement("h1");
+    tileTitle.textContent = book.title;
+    tileHeader.appendChild(tileTitle);
+    let tileDeleteButton = document.createElement("button");
+    tileDeleteButton.setAttribute("data-delete-book", "");
+    tileDeleteButton.innerHTML = "&times;";
+    tileHeader.appendChild(tileDeleteButton);
+    newBookTile.appendChild(tileHeader)
     // Book information
     let tileList = document.createElement("ul");
     let tileAuthor = document.createElement("li");
@@ -78,7 +85,7 @@ function addBookToLibrary(book) {
 
 
 
-// Modals
+// Modals (add book button)
 const overlay = document.getElementById('modalOverlay');
 const modalOverlay = document.getElementById("modalOverlay");
 const openModalButtons = document.querySelectorAll("[data-modal-target]");
@@ -128,4 +135,20 @@ addBookSubmitButton.addEventListener("click", () => {
     console.log(bookRead);
     let addBook = newBook(bookTitle, bookAuthor, bookPages, bookRead);
     addBookToLibrary(addBook);
-})
+    let modal = addBookSubmitButton.closest(".modal");
+    closeModal(modal);
+});
+
+// Delete book functionality
+const deleteBookButtons = document.querySelectorAll("[data-delete-book]");
+deleteBookButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        console.log("active");
+        let bookTarget = button.closest(".tile");
+        deleteBook(bookTarget);
+    })
+});
+
+function deleteBook(bookTile) {
+    bookTile.remove();
+}

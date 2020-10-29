@@ -10,30 +10,35 @@
 
 <body>
     <header>
-        <button data-modal-target="#addBookModal" id="addBookButton">Add Book</button>
-        <div class="modal" id="addBookModal">
-            <div class="modalHeader">
-                <div class="modalTitle">Add book to library</div>
-                <button data-modal-close class="modalClose">&times;</button>
-            </div>
-            <div class="modalBody">
-                <label for="bookTitle">Title:</label>
-                <input type="text" id="bookTitle" name="bookTitle">
-                <label for="bookAuthor">Author:</label>
-                <input type="text" id="bookAuthor" name="bookAuthor">
-                <label for="bookPages">Pages:</label>
-                <input type="text" id="bookPages" name="bookPages">
-                <label for="bookRead">Have you read this book?</label>
-                <div>
-                    <input type="radio" id="bookRead" name="read" value="Read">
-                    <label for="bookRead">Read</label>
-                    <input type="radio" id="bookNotRead" name="read" value="Not read">
-                    <label for="bookNotRead">Not Read</label>
-                </div>
-                <input type="submit" value="Add Book" id="addBookSubmit">
-            </div>
+        <div id="libraryTitle">
+            <h1>Your Library</h1>
         </div>
-        <div id="modalOverlay"></div>
+        <div>
+            <button data-modal-target="#addBookModal" id="addBookButton">Add Book</button>
+            <div class="modal" id="addBookModal">
+                <div class="modalHeader">
+                    <div class="modalTitle">Add book to library</div>
+                    <button data-modal-close class="modalClose">&times;</button>
+                </div>
+                <div class="modalBody">
+                    <label for="bookTitle">Title:</label>
+                    <input type="text" id="bookTitle" name="bookTitle">
+                    <label for="bookAuthor">Author:</label>
+                    <input type="text" id="bookAuthor" name="bookAuthor">
+                    <label for="bookPages">Pages:</label>
+                    <input type="text" id="bookPages" name="bookPages">
+                    <label for="bookRead">Have you read this book?</label>
+                    <div>
+                        <input type="radio" id="bookRead" name="read" value="Read">
+                        <label for="bookRead">Read</label>
+                        <input type="radio" id="bookNotRead" name="read" value="Not read">
+                        <label for="bookNotRead">Not Read</label>
+                    </div>
+                    <input type="submit" value="Add Book" id="addBookSubmit">
+                </div>
+            </div>
+            <div id="modalOverlay"></div>
+        </div>
     </header>
     <br>
     <main id="library"></main>
