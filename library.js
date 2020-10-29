@@ -56,17 +56,31 @@ function addBookToLibrary(book) {
     // For each book, make a tile in the library and show the books information within that tile
     let newBookTile = document.createElement("article");
     newBookTile.classList.add("tile");
-    // Book title and delete book button
+    // Book title
     let tileHeader = document.createElement("div");
     tileHeader.classList.add("tileHeader");
     let tileTitle = document.createElement("h1");
     tileTitle.textContent = book.title;
     tileHeader.appendChild(tileTitle);
+    // Read/unread toggle
+    let tileReadToggle = document.createElement("button");
+    tileReadToggle.setAttribute("data-read-toggle", book.read);
+    tileReadToggle.textContent = (book.read) ? "Unread?" : "Read?";
+    // Delete book button
     let tileDeleteButton = document.createElement("button");
     tileDeleteButton.setAttribute("data-delete-book", "");
     tileDeleteButton.innerHTML = "&times;";
-    tileHeader.appendChild(tileDeleteButton);
     newBookTile.appendChild(tileHeader)
+
+    // Div to hold buttons
+    let buttonHolder = document.createElement("div");
+    buttonHolder.id = "buttonHolder";
+    buttonHolder.appendChild(tileReadToggle);
+    buttonHolder.appendChild(tileDeleteButton);
+    tileHeader.appendChild(buttonHolder);
+
+
+
     // Book information
     let tileList = document.createElement("ul");
     let tileAuthor = document.createElement("li");
@@ -143,7 +157,6 @@ addBookSubmitButton.addEventListener("click", () => {
 const deleteBookButtons = document.querySelectorAll("[data-delete-book]");
 deleteBookButtons.forEach(button => {
     button.addEventListener("click", () => {
-        console.log("active");
         let bookTarget = button.closest(".tile");
         deleteBook(bookTarget);
     })
@@ -152,3 +165,20 @@ deleteBookButtons.forEach(button => {
 function deleteBook(bookTile) {
     bookTile.remove();
 }
+
+// Read/Unread book functionality
+const readToggles = document.querySelectorAll("[data-read-toggle]");
+readToggles.forEach(button => {
+    button.addEventListener("click", () => {
+        let bookTarget = button.closest(".tile");
+        let isRead = (button.dataset.readToggle == "true");
+        if (isRead) {
+            // When the button is pressed, if unread change to read. and vice versa.
+            bookTarget.children[1].children[2].textContent = "Not read";
+            button.textContent = "Read?"
+        } else {
+            bookTarget.children[1].children[2].textContent = "Read";
+            button.textContent = "Unread?"
+        }
+    })
+})

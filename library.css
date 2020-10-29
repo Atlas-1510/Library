@@ -74,9 +74,11 @@ font-weight: bold;
 }
 
 /* Library Header */
-#libraryTitle {
+header {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 
 /* Library tiles */
@@ -106,8 +108,9 @@ article > h1 {
 
 .tileHeader {
   display: flex;
+  flex-direction: row;
   height: 10%;
   margin: 15px 15px 0px 15px;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
