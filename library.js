@@ -164,49 +164,41 @@ deleteBookButtons.forEach(button => {
 // Read/Unread book functionality
 const readToggles = document.querySelectorAll("[data-read-toggle]");
 readToggles.forEach(button => {
-    readButtonToggle(button)
+    readToggleClickListener(button);
 });
 
 function refreshTile(tile) {
-    console.log("refresh tile activated");
     // Need position the tile was in, remember so it can be put back in same position
     let allNodes = Array.from(libraryMain.childNodes);
-    // console.log(`All nodes: ${allNodes}`);
-    // console.log(`Number of nodes: ${allNodes.length}`);
     let tilePosition = allNodes.indexOf(tile);
-    // console.log(`tile position (counting from zero): ${tilePosition}`);
     if (tilePosition == allNodes.length - 1) {
         tilePosition = null;
-        // console.log(`Last tile, tilePosition is ${tilePosition}`);
     }
     let bookSourceIndex = tile.getAttribute("data-book-index");
-    // console.log(`bookSourceIndex: ${bookSourceIndex}`);
 
     libraryMain.removeChild(tile);
 
     // recreate the tile, and add it back in the position it was in before.
     let refreshedTile = newTile(myLibrary[bookSourceIndex]);
-    // console.log(`refreshedTile bookSourceIndex: ${bookSourceIndex}`);
     refreshedTile.setAttribute("data-book-index", bookSourceIndex);
     libraryMain.insertBefore(refreshedTile, libraryMain.childNodes[tilePosition])
 
     // Add a new click event listener to the newly created button
-    // let button = refreshedTile.childNodes[0].childNodes[1].childNodes[0];
-    let button = refreshedTile.querySelectorAll(".tileHeader .buttonHolder [data-read-toggle]");
-    console.log(`Printing button....`);
-    console.log(button);
-    readButtonToggle(button);
+    let button = refreshedTile.querySelector(".tileHeader .buttonHolder [data-read-toggle]");
+    readToggleClickListener(button);
 }
 
-function readButtonToggle(button) {
-    console.log(`Activated.`)
-    console.log(button);
+function readToggleClickListener(button) {
     button.addEventListener("click", () => {
-        console.log("click registered");
         // Get the book and then run the function on that book
         let book = myLibrary[button.closest(".tile").getAttribute("data-book-index")];
         button.textContent = (book.read) ? "Read" : "Unread";
-        book.read = !book.read
+        book.read = !book.read;
         refreshTile(button.closest(".tile"));
     })
 }
+
+
+
+
+
