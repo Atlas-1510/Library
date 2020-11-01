@@ -5,7 +5,6 @@ const libraryMain = document.getElementById("library");
 // Global counter to give an index number to each book, to link tile DOM element with actual book object
 let bookIndex = 0;
 
-
 // Book Constructor
 function Book(title, author, pages, read) {
     this.title = title;
@@ -17,9 +16,6 @@ function Book(title, author, pages, read) {
 // Dummy books to start with
 let debug = true;
 if (debug) {
-    debugFn();
-}
-function debugFn() {
     const testBooks = [
         ["The Hobbit", "Tolkien", 295, false],
         ["Harry Potter", "J.R Rowling", 432, true],
@@ -46,7 +42,6 @@ myLibrary.forEach((book) => {
     addBookToLibrary(book);
 });
 
-
 function newTile(book) {
     // Tile Header (title and buttons)
     // (title)
@@ -57,18 +52,6 @@ function newTile(book) {
     let tileTitle = document.createElement("h1");
     tileTitle.textContent = book.title;
     tileHeader.appendChild(tileTitle);
-    // (buttons to read or delete)
-    let buttonHolder = document.createElement("div");
-    buttonHolder.classList.add("buttonHolder");
-    let tileReadToggle = document.createElement("button");
-    tileReadToggle.setAttribute("data-read-toggle", "");
-    tileReadToggle.textContent = (book.read) ? "Unread?" : "Read?";
-    buttonHolder.appendChild(tileReadToggle);
-    let tileDeleteButton = document.createElement("button");
-    tileDeleteButton.setAttribute("data-delete-book", "");
-    tileDeleteButton.innerHTML = "&times;";
-    buttonHolder.appendChild(tileDeleteButton);
-    tileHeader.appendChild(buttonHolder);
     // Book information
     let tileList = document.createElement("ul");
     let tileAuthor = document.createElement("li");
@@ -77,18 +60,31 @@ function newTile(book) {
     tilePages.textContent = `${book.pages} pages`
     let tileRead = document.createElement("li");
     tileRead.textContent = (book.read) ? "Read" : "Not read";
-
     tileList.appendChild(tileAuthor);
     tileList.appendChild(tilePages);
     tileList.appendChild(tileRead);
+    // (buttons to read or delete)
+    let buttonHolder = document.createElement("div");
+    buttonHolder.classList.add("buttonHolder");
+    let tileReadToggle = document.createElement("button");
+    tileReadToggle.setAttribute("data-read-toggle", "");
+    tileReadToggle.classList.add("tileButton", "readButton");
+    tileReadToggle.textContent = (book.read) ? "Unread?" : "Read?";
+    buttonHolder.appendChild(tileReadToggle);
+    let tileDeleteButton = document.createElement("button");
+    tileDeleteButton.setAttribute("data-delete-book", "");
+    tileDeleteButton.classList.add("tileButton", "deleteButton");
+    tileDeleteButton.innerHTML = "&times;";
+    buttonHolder.appendChild(tileDeleteButton);
     // Add components to tile
     newBookTile.appendChild(tileHeader)
     newBookTile.appendChild(tileList);
+    newBookTile.appendChild(buttonHolder)
+
     return newBookTile;
 }
 
 function addBookToLibrary(book) {
-    myLibrary.push(book);
     // For each book, make a tile in the library and show the books information within that tile
     let tile = newTile(book);
     tile.setAttribute("data-book-index", bookIndex);
@@ -152,20 +148,43 @@ addBookSubmitButton.addEventListener("click", () => {
 // Delete book functionality
 const deleteBookButtons = document.querySelectorAll("[data-delete-book]");
 deleteBookButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        console.log("active");
-        button.closest(".tile").remove();
-        let libraryIndex = button.closest(".tile").getAttribute("data-book-index");
-        myLibrary.splice(libraryIndex, 1);
-    })
+    deleteButtonClickListener(button)
 });
-
 
 // Read/Unread book functionality
 const readToggles = document.querySelectorAll("[data-read-toggle]");
 readToggles.forEach(button => {
     readToggleClickListener(button);
 });
+
+
+function readToggleClickListener(button) {
+    button.addEventListener("click", () => {
+        // Get the book and then run the function on that book
+        let book = myLibrary[button.closest(".tile").getAttribute("data-book-index")];
+        button.textContent = (book.read) ? "Read" : "Unread";
+        book.read = !book.read;
+        refreshTile(button.closest(".tile"));
+    })
+}
+
+function deleteButtonClickListener(button) {
+    button.addEventListener("click", () => {
+        // Library index (data-book-index) of book to be deleted
+        let libraryIndex = button.closest(".tile").getAttribute("data-book-index");
+        button.closest(".tile").remove();
+        myLibrary.splice(libraryIndex, 1);
+        // for every tile that has a library index greater than the deleted tile, reduce by one to fill the gap
+        let remainingTiles = document.querySelectorAll(".tile");
+        remainingTiles.forEach(tile => {
+            let tileIndex = tile.getAttribute("data-book-index");
+            if (tileIndex > libraryIndex) {
+                tile.setAttribute("data-book-index", tileIndex - 1);
+            }
+        })
+    })
+}
+
 
 function refreshTile(tile) {
     // Need position the tile was in, remember so it can be put back in same position
@@ -183,22 +202,9 @@ function refreshTile(tile) {
     refreshedTile.setAttribute("data-book-index", bookSourceIndex);
     libraryMain.insertBefore(refreshedTile, libraryMain.childNodes[tilePosition])
 
-    // Add a new click event listener to the newly created button
-    let button = refreshedTile.querySelector(".tileHeader .buttonHolder [data-read-toggle]");
-    readToggleClickListener(button);
+    // Add new event listeners to newly created tile buttons
+    let readToggle = refreshedTile.querySelector(".buttonHolder [data-read-toggle]");
+    readToggleClickListener(readToggle);
+    let deleteButton = refreshedTile.querySelector(".buttonHolder [data-delete-book]");
+    deleteButtonClickListener(deleteButton);
 }
-
-function readToggleClickListener(button) {
-    button.addEventListener("click", () => {
-        // Get the book and then run the function on that book
-        let book = myLibrary[button.closest(".tile").getAttribute("data-book-index")];
-        button.textContent = (book.read) ? "Read" : "Unread";
-        book.read = !book.read;
-        refreshTile(button.closest(".tile"));
-    })
-}
-
-
-
-
-
