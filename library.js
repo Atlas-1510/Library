@@ -15,17 +15,46 @@ function Book(title, author, pages, read) {
 
 // Dummy books to start with
 let debug = true;
+const testBooks = [
+    ["The Hobbit", "Tolkien", 295, false],
+    ["Harry Potter", "J.R Rowling", 432, true],
+    ["Dune", "Frank Herbert", 689, true],
+    ["The Witcher", "Andrzej Sapkowski", 288, true],
+]
 if (debug) {
-    const testBooks = [
-        ["The Hobbit", "Tolkien", 295, false],
-        ["Harry Potter", "J.R Rowling", 432, true],
-        ["Dune", "Frank Herbert", 689, true],
-        ["The Witcher", "Andrzej Sapkowski", 288, true],
-    ]
     for (let i = 0; i < testBooks.length; i++) {
         addBookFromArray(testBooks[i]);
     }
 }
+
+// Button to get rid of test books
+let testbookToggle = document.getElementById('clearTestBooks');
+testbookToggle.addEventListener("click", () => {
+    debug = !debug;
+    let tiles = document.querySelectorAll(".tile");
+    tiles.forEach(tile => {
+        let tileTitle = tile.querySelector(".tileHeader").children[0].textContent;
+        for (let i = 0; i < myLibrary.length; i++) {
+            for (let j = 0; j < testBooks.length; j++) {
+                if (tileTitle == testBooks[j][0]) {
+                    let libraryIndex = tile.getAttribute("data-book-index");
+                    tile.remove();
+                    myLibrary.splice(libraryIndex, 1);
+                    // for every tile that has a library index greater than the deleted tile, reduce by one to fill the gap
+                    let remainingTiles = document.querySelectorAll(".tile");
+                    remainingTiles.forEach(tile => {
+                        let tileIndex = tile.getAttribute("data-book-index");
+                        if (tileIndex > libraryIndex) {
+                            tile.setAttribute("data-book-index", tileIndex - 1);
+                        }
+                    })
+                    bookIndex = bookIndex - 1;
+                }
+            }
+        }
+    })
+})
+
 
 // Function to take book information array, make it into a book, and add to the library array
 function addBookFromArray(array) {

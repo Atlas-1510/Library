@@ -118,7 +118,7 @@ html {
 }
 
 #addBookSubmit {
-  background-color: #59c9a5;
+  background-color: #80Ed99;
 }
 
 #addBookCancel {
@@ -160,7 +160,7 @@ header {
 }
 
 #addBookButton {
-  background-color: #59c9a5;
+  background-color: #4CE670;
   margin-bottom: 2%;
   font-size: 1.2rem;
   padding: 1% 8% 1% 8%;
@@ -262,6 +262,20 @@ button {
   background-color: #d81e5b;
 }
 
+
+/* Clear Default Books Button */
+#testBookButtonHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#clearTestBooks {
+  z-index: 3;
+  position: relative;
+
+}
 
 /* Background image */
 
