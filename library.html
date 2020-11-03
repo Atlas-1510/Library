@@ -11,7 +11,7 @@
 <body>
     <header>
         <div id="libraryTitle">
-            <h1>Your Library</h1>
+            <h1>Welcome To Your Library</h1>
         </div>
         <button data-modal-target="#addBookModal" id="addBookButton">Add Book</button>
     </header>
@@ -35,13 +35,14 @@
                     <input type="radio" id="bookNotRead" name="read" value="Not read">
                     <label for="bookNotRead">Not Read</label>
                 </div>
-                <input type="submit" value="Add Book" id="addBookSubmit">
+                <button type="submit" value="Add Book" id="addBookSubmit">Add Book</button>
             </div>
         </div>
         <div id="modalOverlay"></div>
     </div>
     <br>
     <main id="library"></main>
+    <div id='backgroundImage'></div>
     <script src="library.js"></script>
 </body>
 

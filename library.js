@@ -74,7 +74,7 @@ function newTile(book) {
     let tileDeleteButton = document.createElement("button");
     tileDeleteButton.setAttribute("data-delete-book", "");
     tileDeleteButton.classList.add("tileButton", "deleteButton");
-    tileDeleteButton.innerHTML = "&times;";
+    tileDeleteButton.innerHTML = "Delete";
     buttonHolder.appendChild(tileDeleteButton);
     // Add components to tile
     newBookTile.appendChild(tileHeader)
