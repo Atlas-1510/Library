@@ -81,21 +81,57 @@ function newTile(book) {
     newBookTile.appendChild(tileList);
     newBookTile.appendChild(buttonHolder)
 
+    // Set tile background
+    let colors = setTileColor();
+    let colorOne = "#" + colors[0]
+    let colorTwo = "#" + colors[1]
+    let deg = Math.floor(Math.random() * 180);
+
+    newBookTile.style.backgroundImage = `linear-gradient(${deg}deg, ${colorOne}, ${colorTwo})`;
+
     return newBookTile;
 }
+
+function setTileColor() {
+    let colorArrays = [
+        ["8d6b94", "b185a7", "c3a29e", "e8dbc5", "fff4e9"],
+        ["dec5e3", "cdedfd", "b6dcfe", "a9f8fb", "81f7e5"],
+        ["9f7e69", "d2bba0", "f2efc7", "f7ffe0", "ffeee2"],
+        ["baa7b0", "b2abbf", "b1b5c8", "bfd5e2", "c7ebf0"],
+        ["91a6ff", "ff88dc", "faff7f", "ffffff", "ff5154"],
+        ["586994", "7d869c", "a2abab", "b4c4ae", "e5e8b6"],
+        ["f9e7e7", "ded6d6", "d2cbcb", "ada0a6", "7d938a"],
+        ["ccdbdc", "9ad1d4", "80ced7", "007ea7", "00628f"],
+    ]
+
+    let colorPalette = colorArrays[Math.floor(Math.random() * colorArrays.length)]
+    let colorOne = colorPalette[Math.floor(Math.random() * colorPalette.length)]
+    let colorTwo = colorPalette[Math.floor(Math.random() * colorPalette.length)]
+    while (colorOne == colorTwo) {
+        colorTwo = colorPalette[Math.floor(Math.random() * colorPalette.length)]
+    }
+    let returnArray = []
+    returnArray.push(colorOne, colorTwo);
+    return returnArray
+}
+
 
 function addBookToLibrary(book) {
     // For each book, make a tile in the library and show the books information within that tile
     let tile = newTile(book);
     tile.setAttribute("data-book-index", bookIndex);
     bookIndex++;
-
+    addListeners(tile);
     libraryMain.appendChild(tile);
-    // Need to add new button functionality here
-    refreshTile(tile);
 }
 
-
+function addListeners(tile) {
+    // Add button event listeners
+    let deleteButton = tile.querySelector(".buttonHolder").querySelector(".deleteButton");
+    deleteButtonClickListener(deleteButton);
+    let readButton = tile.querySelector(".buttonHolder").querySelector(".readButton");
+    readToggleClickListener(readButton);
+}
 
 
 // Modals (add book button)
@@ -149,18 +185,6 @@ addBookSubmitButton.addEventListener("click", () => {
     closeModal(modal);
 });
 
-// Delete book functionality
-const deleteBookButtons = document.querySelectorAll("[data-delete-book]");
-deleteBookButtons.forEach(button => {
-    deleteButtonClickListener(button)
-});
-
-// Read/Unread book functionality
-const readToggles = document.querySelectorAll("[data-read-toggle]");
-readToggles.forEach(button => {
-    readToggleClickListener(button);
-});
-
 
 function readToggleClickListener(button) {
     button.addEventListener("click", () => {
@@ -186,6 +210,7 @@ function deleteButtonClickListener(button) {
                 tile.setAttribute("data-book-index", tileIndex - 1);
             }
         })
+        bookIndex = bookIndex - 1;
     })
 }
 
@@ -198,18 +223,14 @@ function refreshTile(tile) {
         tilePosition = null;
     }
     let bookSourceIndex = tile.getAttribute("data-book-index");
-    console.log(`BookSourceIndex: ${bookSourceIndex}`);
 
     libraryMain.removeChild(tile);
 
     // recreate the tile, and add it back in the position it was in before.
     let refreshedTile = newTile(myLibrary[bookSourceIndex]);
     refreshedTile.setAttribute("data-book-index", bookSourceIndex);
+    addListeners(refreshedTile);
     libraryMain.insertBefore(refreshedTile, libraryMain.childNodes[tilePosition])
 
-    // Add new event listeners to newly created tile buttons
-    let readToggle = refreshedTile.querySelector(".buttonHolder [data-read-toggle]");
-    readToggleClickListener(readToggle);
-    let deleteButton = refreshedTile.querySelector(".buttonHolder [data-delete-book]");
-    deleteButtonClickListener(deleteButton);
+
 }
