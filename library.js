@@ -89,7 +89,10 @@ function addBookToLibrary(book) {
     let tile = newTile(book);
     tile.setAttribute("data-book-index", bookIndex);
     bookIndex++;
+
     libraryMain.appendChild(tile);
+    // Need to add new button functionality here
+    refreshTile(tile);
 }
 
 
@@ -140,6 +143,7 @@ addBookSubmitButton.addEventListener("click", () => {
     let bookPages = document.getElementById("bookPages").value;
     let bookRead = (document.querySelector('input[name="read"]:checked').value == "Read") ? true : false;
     let addBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+    myLibrary.push(addBook);
     addBookToLibrary(addBook);
     let modal = addBookSubmitButton.closest(".modal");
     closeModal(modal);
@@ -194,6 +198,7 @@ function refreshTile(tile) {
         tilePosition = null;
     }
     let bookSourceIndex = tile.getAttribute("data-book-index");
+    console.log(`BookSourceIndex: ${bookSourceIndex}`);
 
     libraryMain.removeChild(tile);
 
