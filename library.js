@@ -30,30 +30,44 @@ if (debug) {
 // Button to get rid of test books
 let testbookToggle = document.getElementById('clearTestBooks');
 testbookToggle.addEventListener("click", () => {
-    debug = !debug;
-    let tiles = document.querySelectorAll(".tile");
-    tiles.forEach(tile => {
-        let tileTitle = tile.querySelector(".tileHeader").children[0].textContent;
-        for (let i = 0; i < myLibrary.length; i++) {
-            for (let j = 0; j < testBooks.length; j++) {
-                if (tileTitle == testBooks[j][0]) {
-                    let libraryIndex = tile.getAttribute("data-book-index");
-                    tile.remove();
-                    myLibrary.splice(libraryIndex, 1);
-                    // for every tile that has a library index greater than the deleted tile, reduce by one to fill the gap
-                    let remainingTiles = document.querySelectorAll(".tile");
-                    remainingTiles.forEach(tile => {
-                        let tileIndex = tile.getAttribute("data-book-index");
-                        if (tileIndex > libraryIndex) {
-                            tile.setAttribute("data-book-index", tileIndex - 1);
-                        }
-                    })
-                    bookIndex = bookIndex - 1;
+    let tiles = Array.from(library.querySelectorAll(".tile"));
+    // Match the books in library to the books in the test array
+    for (let i = 0; i < myLibrary.length; i++) {
+        for (let j = 0; j < testBooks.length; j++) {
+            if (myLibrary[i].title == testBooks[j][0]) {
+                // Once a match is found, go through each tile until the correct tile for that book is found
+                for (let k = 0; k < tiles.length; k++) {
+                    let tile = tiles[k]
+                    let tileTitle = tile.querySelector(".tileHeader").children[0].textContent;
+                    if (tileTitle == myLibrary[i].title) {
+                        let libraryIndex = tile.getAttribute("data-book-index");
+                        library.removeChild(tile);
+                        myLibrary.splice(libraryIndex, 1);
+                        // for every tile that has a library index greater than the deleted tile, reduce by one to fill the gap
+                        let remainingTiles = document.querySelectorAll(".tile");
+                        remainingTiles.forEach(tile => {
+                            let tileIndex = tile.getAttribute("data-book-index");
+                            if (tileIndex > libraryIndex) {
+                                tile.setAttribute("data-book-index", tileIndex - 1);
+                            }
+                        })
+                        bookIndex = bookIndex - 1;
+                        break
+                    }
                 }
             }
         }
-    })
+    }
 })
+// Gets rid of the ugly blue border that highlights the 'remove test books' button when clicked
+function handleFirstTab(e) {
+    if (e.keyCode === 9) { // the "I am a keyboard user" key
+        document.body.classList.add('user-is-tabbing');
+        window.removeEventListener('keydown', handleFirstTab);
+    }
+}
+testbookToggle.addEventListener('keydown', handleFirstTab);
+
 
 
 // Function to take book information array, make it into a book, and add to the library array
