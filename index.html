@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Project</title>
+    <link rel="stylesheet" href="library.css">
+</head>
+
+<body>
+    <header>
+        <div id="libraryTitle">
+            <h1>Welcome To Your Library</h1>
+        </div>
+        <button data-modal-target="#addBookModal" id="addBookButton">Add Book</button>
+    </header>
+    <div id="modalHolder">
+        <div class="modal" id="addBookModal">
+            <div class="modalHeader">
+                <div>
+                    <h3>Add book to library</h3>
+                </div>
+                <div>
+                    <h6>Enter your book details below...</h2>
+                </div>
+            </div>
+            <div class="modalBody">
+                <label for="bookTitle"></label>
+                <input type="text" id="bookTitle" name="bookTitle" placeholder="Title">
+                <label for="bookAuthor"></label>
+                <input type="text" id="bookAuthor" name="bookAuthor" placeholder="Author">
+                <label for="bookPages"></label>
+                <input type="text" id="bookPages" name="bookPages" placeholder="Page count">
+                <label for="bookRead"></label>
+                <div id="modalReadToggle">
+                    <div id="bookReadContainer">
+                        <label for="bookRead">Read</label>
+                        <input type="radio" id="bookRead" name="read" value="Read">
+                    </div>
+                    <div id="bookNotReadContainer">
+                        <label for="bookNotRead">Not Read</label>
+                        <input type="radio" id="bookNotRead" name="read" value="Not read">
+                    </div>
+                </div>
+                <div id="addBookModalButtonHolder">
+                    <button type="submit" value="Add Book" id="addBookSubmit">Add Book</button>
+                    <button data-modal-close class="modalClose" id="addBookCancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+        <div id="modalOverlay"></div>
+    </div>
+    <br>
+    <main id="library"></main>
+    <div id="testBookButtonHolder">
+        <button id="clearTestBooks">Click Here To Remove Default Books</button>
+    </div>
+    <div id='backgroundImage'></div>
+    <script src="library.js"></script>
+</body>
+
+</html>
